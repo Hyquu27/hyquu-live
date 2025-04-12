@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload Video for YouTube Loop</title>
+</head>
+<body style="font-family: sans-serif; text-align: center; padding: 20px;">
+  <h2>Upload Video for 24/7 Stream</h2>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="video" accept="video/*" required />
+    <br><br>
+    <button type="submit">Upload & Start Stream</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const status = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      status.innerText = "Uploading...";
+
+      const response = await fetch('/upload', {
+        method: 'POST',
+        body: data
+      });
+
+      const result = await response.text();
+      status.innerText = result;
+    });
+  </script>
+</body>
+</html>
